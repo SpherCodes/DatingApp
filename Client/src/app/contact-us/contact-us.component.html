@@ -1,0 +1,27 @@
+@if(!accountsService.CurrentUser()) {
+    <div class="card shadow-lg w-50 m-auto border-0 rounded-3">
+        <div class="card-header bg-primary text-white text-center py-3">
+            <h3 class="mb-0">Contact Us</h3>
+        </div>
+        <div class="card-body">
+            <div class="p-4">
+                <div class="contact-info">
+                    <div class="mb-4 d-flex align-items-center">
+                        <strong class="text-primary me-2">Name:</strong>
+                        <span class="text-dark">{{developer.developerName}}</span>
+                    </div>
+                    <div class="mb-4 d-flex align-items-center">
+                        <strong class="text-primary me-2">Email:</strong>
+                        <a href="mailto:{{developer.developerEmail}}" class="text-primary text-decoration-none hover-underline">
+                            {{developer.developerEmail}}
+                        </a>
+                    </div>
+                    <div class="mb-4">
+                        <strong class="text-primary">Bio:</strong>
+                        <p class="mt-2 text-muted">{{developer.developerBio}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
