@@ -8,6 +8,7 @@ import { TestErrorsComponent } from './errors/test-error/test-error.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { MemberListComponent } from './members/members-list/members-list.component';
 
 export const routes: Routes = [
   {
@@ -21,12 +22,11 @@ export const routes: Routes = [
     children: [
       {
         path: 'members',
-        component: MembersDetailComponent,
+        component: MemberListComponent,
       },
       {
-        path: 'members/:id',
+        path: 'members/:username',
         component: MembersDetailComponent,
-        canActivate: [authGuard],
       },
       { path: 'lists', component: ListsComponent },
       { path: 'messages', component: MessagesComponent },
