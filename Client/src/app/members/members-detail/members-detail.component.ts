@@ -10,29 +10,29 @@ import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
   standalone: true,
   imports: [TabsModule, GalleryModule],
   templateUrl: './members-detail.component.html',
-  styleUrl: './members-detail.component.css'
+  styleUrl: './members-detail.component.css',
 })
 export class MembersDetailComponent implements OnInit {
   private membersService = inject(MembersService);
   private route = inject(ActivatedRoute);
   member?: Member;
-  images: GalleryItem[]  = []
-  
+  images: GalleryItem[] = [];
+
   ngOnInit(): void {
-    this.loadMember()
+    this.loadMember();
   }
 
-  loadMember(){
-    const username = this.route.snapshot.paramMap.get('username')
-    if(!username) return;
+  loadMember() {
+    const username = this.route.snapshot.paramMap.get('username');
+    if (!username) return;
 
     this.membersService.getMember(username).subscribe({
       next: (member) => {
         this.member = member;
-        member.photos.map(p => {
-          this.images.push(new ImageItem({ src: p.url, thumb: p.url }))
-        })
-      }
-    })
+        member.photos.map((p) => {
+          this.images.push(new ImageItem({ src: p.url, thumb: p.url }));
+        });
+      },
+    });
   }
 }

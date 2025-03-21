@@ -13,5 +13,6 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
       }
     })
   }
+  //for the next interceptor in the chain
   return next(req);
 };
