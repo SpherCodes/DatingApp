@@ -25,7 +25,8 @@
 
     @if(AccountsService.CurrentUser()){
         <div  dropdown class="dropdown" >
-            <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">
+            <img src="{{AccountsService.CurrentUser()?.photoUrl}}" class="me-2 border border-white" />
+            <a  dropdownToggle class="dropdown-toggle text-light text-decoration-none">
                 Welcome {{AccountsService.CurrentUser()?.username  | titlecase}}
             </a>
             <div class="dropdown-menu" *dropdownMenu>
