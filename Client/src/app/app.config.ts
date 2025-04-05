@@ -1,5 +1,6 @@
 import { NgxSpinnerConfig } from './../../node_modules/ngx-spinner/lib/config.d';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { TimeagoModule } from 'ngx-timeago';
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -21,6 +22,6 @@ export const appConfig: ApplicationConfig = {
     provideToastr({
       positionClass: 'toast-bottom-right',
     }),
-    importProvidersFrom(NgxSpinnerModule)
+    importProvidersFrom(NgxSpinnerModule,TimeagoModule.forRoot()),
   ],
 };
