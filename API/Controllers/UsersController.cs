@@ -19,7 +19,7 @@ namespace API.Controllers
             userParams.CurrentUsername = User.GetUsername();
             var users = await userRepository.GetMembersAsync(userParams);
 
-            Response.AddPaginationHeader(users);
+            Response.AddPaginationHeader(userParams.PageNumber, users);
 
             return Ok(users);
         }

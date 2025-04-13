@@ -7,6 +7,7 @@ import { Member } from '../_Models/member';
 import { of, tap } from 'rxjs';
 import { Photo } from '../_Models/photo';
 import { PaginatedResult } from '../_Models/pagination';
+import { setPaginatedResponse, setPaginationHeaders } from './paginationHelper';
 
 @Injectable({
   providedIn: 'root',
@@ -24,43 +25,36 @@ export class MembersService {
     this.userParams.set(new UserParams(this.user));
   }
 
-  private setPaginatedResposne(response: HttpResponse<Member[]>) {
-    this.paginatedResults.set({
-      items: response.body as Member[],
-      pagination: JSON.parse(response.headers.get('Pagination')!)
-    })
-  }
-
   getMembers() {
-    const response = this.memberCatch.get(Object.values(this.userParams()).join('-'));
+    const response = this.memberCatch.get(
+      Object.values(this.userParams()).join('-')
+    );
 
     if (response) {
-      return this.setPaginatedResposne(response);
+      return setPaginatedResponse(response, this.paginatedResults);
     }
 
-    let params = this.setPaginationHeaders(this.userParams().pageNumber,this.userParams().pageSize);
+    let params = setPaginationHeaders(
+      this.userParams().pageNumber,
+      this.userParams().pageSize
+    );
 
-    params = params.append('minAge',this.userParams().minAge);
-    params = params.append('maxAge',this.userParams().maxAge);
-    params = params.append('gender',this.userParams().gender);
-    params = params.append('orderBy',this.userParams().orderBy);
+    params = params.append('minAge', this.userParams().minAge);
+    params = params.append('maxAge', this.userParams().maxAge);
+    params = params.append('gender', this.userParams().gender);
+    params = params.append('orderBy', this.userParams().orderBy);
 
-    return this.http.get<Member[]>(this.baseUrl + 'users', { observe: 'response', params }).subscribe({
-      next: response => {
-        this.setPaginatedResposne(response);
-      this.memberCatch.set(Object.values(this.userParams).join('-'), response);
-      }
-    })
-  }
-
-  private setPaginationHeaders(pageNumber: number , pageSize:number){
-    let params = new HttpParams();
-
-    if (pageNumber && pageSize) {
-      params = params.append('pageNumber', pageNumber);
-      params = params.append('pageSize', pageSize);
-    }
-    return params;
+    return this.http
+      .get<Member[]>(this.baseUrl + 'users', { observe: 'response', params })
+      .subscribe({
+        next: (response) => {
+          setPaginatedResponse(response, this.paginatedResults);
+          this.memberCatch.set(
+            Object.values(this.userParams).join('-'),
+            response
+          );
+        },
+      });
   }
 
   getMember(username: string) {
@@ -68,20 +62,23 @@ export class MembersService {
       .reduce((arr, elem) => arr.concat(elem.body), [])
       .find((m: Member) => m.username === username);
 
-      if(member) return of(member);
+    if (member) return of(member);
 
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
   updateMember(member: Member) {
-
-    return this.http.put(this.baseUrl + 'users', member).pipe(
+    return this.http
+      .put(this.baseUrl + 'users', member)
+      .pipe
       // tap(() => {
       //   this.members.update(members => members.map(x => x.username === member.username ? member : x));
       // } )
-    );
+      ();
   }
   setMainPhoto(photo: Photo) {
-    return this.http.put(this.baseUrl + 'users/set-main-photo/' + photo.id, {}).pipe(
+    return this.http
+      .put(this.baseUrl + 'users/set-main-photo/' + photo.id, {})
+      .pipe
       // tap(() => {
       //   this.members.update(members => members.map(m => {
       //     if (m.photoUrl === photo.url) {
@@ -90,18 +87,20 @@ export class MembersService {
       //     return m;
       //   }))
       // })
-    );
+      ();
   }
   deletePhoto(photo: Photo) {
-    return this.http.delete(this.baseUrl + 'users/delete-photo/' + photo.id).pipe(
-      tap(() => {
-        // this.members.update(members => members.map(m => {
-        //   if (m.photos.includes(photo)) {
-        //     m.photos = m.photos.filter(p => p.id !== photo.id);
-        //   }
-        //   return m;
-        // }))
-      }
-    ));
+    return this.http
+      .delete(this.baseUrl + 'users/delete-photo/' + photo.id)
+      .pipe(
+        tap(() => {
+          // this.members.update(members => members.map(m => {
+          //   if (m.photos.includes(photo)) {
+          //     m.photos = m.photos.filter(p => p.id !== photo.id);
+          //   }
+          //   return m;
+          // }))
+        })
+      );
   }
 }
