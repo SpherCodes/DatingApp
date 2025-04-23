@@ -5,6 +5,7 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
+import {ModalModule} from 'ngx-bootstrap/modal';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -22,6 +23,6 @@ export const appConfig: ApplicationConfig = {
     provideToastr({
       positionClass: 'toast-bottom-right',
     }),
-    importProvidersFrom(NgxSpinnerModule,TimeagoModule.forRoot()),
+    importProvidersFrom(NgxSpinnerModule,TimeagoModule.forRoot(),ModalModule.forRoot()),
   ],
 };

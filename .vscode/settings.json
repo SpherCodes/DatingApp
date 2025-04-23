@@ -3,6 +3,7 @@
         "confirmpassword",
         "datepicker",
         "Timeago",
+        "toastr",
         "tokenkey"
     ]
 }

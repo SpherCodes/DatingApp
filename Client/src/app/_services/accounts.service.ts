@@ -1,7 +1,7 @@
 import { LikesService } from './likes.service';
 import { User } from './../_Models/User';
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -13,6 +13,14 @@ export class AccountsService {
   private LikesService = inject(LikesService);
   baseUrl = environment.apiUrl;
   CurrentUser = signal<User | null>(null);
+  roles = computed(() => {
+    const user = this.CurrentUser();
+    if (user && user.token) {
+      const role =  JSON.parse(atob(user.token.split('.')[1])).role
+      return Array.isArray(role) ? role : [role];
+    }
+    return [];
+  })
 
   constructor() {
     console.log(this.CurrentUser());
