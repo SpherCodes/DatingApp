@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { PresenceService } from './presence.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { environment } from '../../environments/environment';
 export class AccountsService {
   private http = inject(HttpClient);
   private LikesService = inject(LikesService);
+  private presenceService = inject(PresenceService);
   baseUrl = environment.apiUrl;
   CurrentUser = signal<User | null>(null);
   roles = computed(() => {
@@ -50,11 +52,12 @@ export class AccountsService {
     localStorage.setItem('user', JSON.stringify(user));
     this.CurrentUser.set(user);
     this.LikesService.getLikeIds();
-
+    this.presenceService.createHubConnection(user);
   }
 
   logout() {
     localStorage.removeItem('user');
     this.CurrentUser.set(null);
+    this.presenceService.stopHubConnection();
   }
 }
