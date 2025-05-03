@@ -14,7 +14,7 @@ namespace API.SignalR
             var httpContext = Context.GetHttpContext();
             var otherUser = httpContext?.Request.Query["user"];
 
-            if (Context.User == null || string.IsNullOrEmpty(otherUser)) 
+            if (Context.User == null || string.IsNullOrEmpty(otherUser))
                 throw new Exception("Cannot join group");
             var groupName = GetGroupName(Context.User.GetUsername(), otherUser);
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
@@ -32,7 +32,7 @@ namespace API.SignalR
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             var group = await RemoveFromMessageGroup();
-            await Clients.Group(group.Name).SendAsync("UpdatedGroup",  group);
+            await Clients.Group(group.Name).SendAsync("UpdatedGroup", group);
             await base.OnDisconnectedAsync(exception);
         }
 
@@ -61,23 +61,24 @@ namespace API.SignalR
             var groupName = GetGroupName(sender.UserName, recipient.UserName);
             var group = await messageRepository.GetMessageGroup(groupName);
 
-            if(group != null && group.Connections.Any(x => x.Username == recipient.UserName))
+            if (group != null && group.Connections.Any(x => x.Username == recipient.UserName))
             {
                 message.DateRead = DateTime.UtcNow;
             }
-            else{
+            else
+            {
                 var Username = recipient.UserName;
                 var connection = await PresenceTracker.GetConnectionsForUser(Username);
                 if (connection != null && connection?.Count != null)
                 {
-                    await presenceHub.Clients.Clients(connection).SendAsync("NewMessageReceived", 
-                    new {sender.UserName,sender.KnownAs });
+                    await presenceHub.Clients.Clients(connection).SendAsync("NewMessageReceived",
+                    new { sender.UserName, sender.KnownAs });
                 }
             }
 
             messageRepository.AddMessage(message);
 
-            if(await messageRepository.SaveAllAsync())
+            if (await messageRepository.SaveAllAsync())
             {
                 await Clients.Group(groupName).SendAsync("NewMessage", mapper.Map<MessageDto>(message));
             }
@@ -101,7 +102,7 @@ namespace API.SignalR
 
             group.Connections.Add(connection);
 
-            if( await messageRepository.SaveAllAsync()) return group;
+            if (await messageRepository.SaveAllAsync()) return group;
             throw new HubException("Failed to add to group");
         }
 
@@ -113,7 +114,7 @@ namespace API.SignalR
             if (connection != null && group != null)
             {
                 messageRepository.RemoveConnection(connection);
-                if(await messageRepository.SaveAllAsync()) return group;
+                if (await messageRepository.SaveAllAsync()) return group;
             }
             throw new HubException("Failed to remove from group");
         }
@@ -122,7 +123,7 @@ namespace API.SignalR
         private string GetGroupName(string caller, string? other)
         {
             var stringCompare = string.CompareOrdinal(caller, other) < 0;
-            return stringCompare ? $"{caller}-{other}" :  $"{other}-{caller}";
+            return stringCompare ? $"{caller}-{other}" : $"{other}-{caller}";
         }
     }
 }
