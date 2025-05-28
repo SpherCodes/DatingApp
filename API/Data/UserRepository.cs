@@ -92,41 +92,61 @@ namespace API.Data
         {
             context.Entry(user).State = EntityState.Modified;
         }
-
         public void AddVisit(UserVisit visit)
         {
             context.UserVisits.Add(visit);
         }
-        public async Task<PagedList<VisitDto>> GetUserVisitorsAsync(int userId, PaginationParams paginationParams)
+
+        public async Task<UserVisit?> GetUserVisitAsync(int visitorId, int visitedId)
+        {
+            return await context.UserVisits
+                .FirstOrDefaultAsync(x => x.VisitorId == visitorId && x.VisitedId == visitedId);
+        }
+        public async Task<PagedList<VisitDto>> GetUserVisitorsAsync(int userId, PaginationParams paginationParams, bool pastMonthOnly = false)
         {
             // Get users who visited the current user (VisitedId == userId)
             var query = context.UserVisits
-                .Where(x => x.VisitedId == userId)
+                .Where(x => x.VisitedId == userId);
+
+            if (pastMonthOnly)
+            {
+                var oneMonthAgo = DateTime.UtcNow.AddMonths(-1);
+                query = query.Where(x => x.VisitDate >= oneMonthAgo);
+            }
+
+            var finalQuery = query
                 .OrderByDescending(x => x.VisitDate)
                 .ProjectTo<VisitDto>(mapper.ConfigurationProvider);
 
-            return await PagedList<VisitDto>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
+            return await PagedList<VisitDto>.CreateAsync(finalQuery, paginationParams.PageNumber, paginationParams.PageSize);
         }
-        public async Task<PagedList<VisitDto>> GetUserVisitsAsync(int userId, PaginationParams paginationParams)
+
+        public async Task<PagedList<VisitDto>> GetUserVisitsAsync(int userId, PaginationParams paginationParams, bool pastMonthOnly = false)
         {
             // Get users that the current user visited (VisitorId == userId)
-            // Map visited user info to VisitDto (not the visitor info)
             var query = context.UserVisits
-                .Where(x => x.VisitorId == userId)
+                .Where(x => x.VisitorId == userId);
+
+            if (pastMonthOnly)
+            {
+                var oneMonthAgo = DateTime.UtcNow.AddMonths(-1);
+                query = query.Where(x => x.VisitDate >= oneMonthAgo);
+            }
+
+            var finalQuery = query
                 .Include(x => x.Visited)
                 .ThenInclude(x => x!.Photos)
                 .OrderByDescending(x => x.VisitDate)
                 .Select(x => new VisitDto
                 {
-                    Id = x.VisitorId * 1000000 + x.VisitedId,
-                    VisitorId = x.VisitedId, // Show the visited user's ID
-                    VisitorUsername = x.Visited!.UserName!, // Show the visited user's username
-                    VisitorPhotoUrl = x.Visited.Photos.FirstOrDefault(p => p.IsMain)!.Url, // Show the visited user's photo
-                    VisitorKnownAs = x.Visited.KnownAs!, // Show the visited user's known as
+                    VisitorId = x.VisitedId, 
+                    VisitorUsername = x.Visited!.UserName!, 
+                    VisitorPhotoUrl = x.Visited.Photos.FirstOrDefault(p => p.IsMain)!.Url, 
+                    VisitorKnownAs = x.Visited.KnownAs!,
                     VisitDate = x.VisitDate
                 });
 
-            return await PagedList<VisitDto>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
+            return await PagedList<VisitDto>.CreateAsync(finalQuery, paginationParams.PageNumber, paginationParams.PageSize);
         }
     }
 }

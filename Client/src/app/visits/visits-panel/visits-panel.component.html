@@ -1,32 +1,85 @@
+<!-- VIP Visits Panel -->
 <div class="text-center mt-3">
-    <h2>{{getTitle()}}</h2>
+    <h2>{{getTitle()}} <span class="badge bg-warning text-dark"><i class="fa fa-crown me-1"></i>VIP</span></h2>
 </div>
 
 <div class="container mt-3">
-    <div class="d-flex">
+    <div class="d-flex flex-wrap gap-2 mb-3">
+        <!-- View Type Selector -->
         <div class="btn-group">
             <button class="btn btn-primary" 
                 btnRadio="visitors"
                 [(ngModel)]="predicate" 
-                (click)="loadVisits()" 
-            >Who visited me</button>
+                (click)="onPredicateChange()">
+                Who visited me
+            </button>
             <button class="btn btn-primary" 
                 btnRadio="visits"
                 [(ngModel)]="predicate" 
-                (click)="loadVisits()" 
-            >Profiles I visited</button>
+                (click)="onPredicateChange()">
+                Who I visited
+            </button>
         </div>
-    </div>
 
-    <div class="row mt-3">
-        @for (visit of getVisitItems(); track visit.id) {
-            <div class="col-2">
-                <app-visit-card [visit]="visit" [isVisitor]="predicate === 'visitors'"></app-visit-card>
+        <!-- Time Filter Selector -->
+        <div class="btn-group">
+            <button class="btn btn-primary" 
+                btnRadio="all"
+                [(ngModel)]="timeFilter"
+                (click)="onTimeFilterChange()">
+                All visits
+            </button>
+            <button class="btn btn-primary" 
+                btnRadio="month"
+                [(ngModel)]="timeFilter"
+                (click)="onTimeFilterChange()">
+                Past month
+            </button>
+        </div>
+    </div>    <!-- Results Count Info -->
+    @if (getPagination()) {
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="text-muted">
+                <small>
+                    Showing {{getVisitItems().length}} of {{getPagination()!.totalItems}} 
+                    {{timeFilter === 'month' ? 'visits from past month' : 'total visits'}}
+                </small>
             </div>
-        }
-    </div>
+            @if (timeFilter === 'month' && getPagination()!.totalItems > 0) {
+                <div class="text-success">
+                    <small><i class="fa fa-filter"></i> Past month filter active</small>
+                </div>
+            }
+        </div>
+    }
 
+    <!-- Results Section -->
+    @if (getVisitItems().length === 0) {
+        <div class="text-center mt-5">
+            <h4 class="text-muted">No visits found</h4>
+            <p class="text-muted">
+                @if (predicate === 'visitors') {
+                    When someone visits your profile, they'll appear here.
+                } @else {
+                    Your visited profiles will appear here.
+                }
+            </p>
+        </div>
+    } @else {
+        <div class="row mt-3">
+            @for (visit of getVisitItems(); track visit.id) {
+                <div class="col-2">
+                    <app-visit-card 
+                        [visit]="visit" 
+                        [isVisitor]="predicate === 'visitors'">
+                    </app-visit-card>
+                </div>
+            }
+        </div>
+    }
 </div>
+
+<!-- Pagination -->
 @if(getPagination()){
     <div class="d-flex justify-content-center">
         <pagination 

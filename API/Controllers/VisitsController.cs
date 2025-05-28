@@ -15,29 +15,28 @@ namespace API.Controllers
     [ApiController]
     [Route("api/[controller]")]
     public class VisitsController(IUnitOfWork unitOfWork, IMapper mapper) : ControllerBase
-    {
-        // Records when a user visits another user's profile
+    {        // Records when a user visits another user's profile
         [HttpPost("{visitedUserId}")]
         public async Task<ActionResult> RecordVisit(int visitedUserId)
         {
             var visitorId = User.GetUserId();
-            var visitedUser = await unitOfWork.UserRepository.GetUserByIdAsync(visitedUserId);
 
+            if (visitorId == visitedUserId) return BadRequest("Cannot visit your own profile");
+
+            var visitedUser = await unitOfWork.UserRepository.GetUserByIdAsync(visitedUserId);
             if (visitedUser == null) return NotFound();
 
-            var visitorList = await unitOfWork.UserRepository.GetUserVisitorsAsync(visitedUserId, paginationParams: new PaginationParams
-            {
-                PageNumber = 1,
-                PageSize = int.MaxValue
-            });
+            // Check if visit already exists
+            var existingVisit = await unitOfWork.UserRepository.GetUserVisitAsync(visitorId, visitedUserId);
 
-            if (visitorList.Any(v => v.VisitorId == visitorId))
+            if (existingVisit != null)
             {
-                var existingVisit = visitorList.First(v => v.VisitorId == visitorId);
+                // Update existing visit date
                 existingVisit.VisitDate = DateTime.UtcNow;
             }
             else
             {
+                // Create new visit
                 var visit = new UserVisit
                 {
                     VisitorId = visitorId,
@@ -54,21 +53,22 @@ namespace API.Controllers
         }        // Only VIP users can see who visited their profile
         [Authorize(Policy = "VIPRole")]
         [HttpGet("visitors")]
-        public async Task<ActionResult<IEnumerable<VisitDto>>> GetVisitors([FromQuery] PaginationParams paginationParams)
+        public async Task<ActionResult<IEnumerable<VisitDto>>> GetVisitors([FromQuery] PaginationParams paginationParams, [FromQuery] bool pastMonthOnly = false)
         {
             var userId = User.GetUserId();
-            var visits = await unitOfWork.UserRepository.GetUserVisitorsAsync(userId, paginationParams);
+            var visits = await unitOfWork.UserRepository.GetUserVisitorsAsync(userId, paginationParams, pastMonthOnly);
 
             Response.AddPaginationHeader(paginationParams.PageNumber, paginationParams.PageSize, visits);
 
             return Ok(visits);
         }
+
         [Authorize(Policy = "VIPRole")]
         [HttpGet("visits")]
-        public async Task<ActionResult<IEnumerable<VisitDto>>> GetVisits([FromQuery] PaginationParams paginationParams)
+        public async Task<ActionResult<IEnumerable<VisitDto>>> GetVisits([FromQuery] PaginationParams paginationParams, [FromQuery] bool pastMonthOnly = false)
         {
             var userId = User.GetUserId();
-            var visits = await unitOfWork.UserRepository.GetUserVisitsAsync(userId, paginationParams);
+            var visits = await unitOfWork.UserRepository.GetUserVisitsAsync(userId, paginationParams, pastMonthOnly);
 
             Response.AddPaginationHeader(paginationParams.PageNumber, paginationParams.PageSize, visits);
 

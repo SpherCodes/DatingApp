@@ -17,9 +17,9 @@ export class VisitCardComponent {
 
   private visitsService = inject(VisitsService);
   visitMember() {
-    if (this.visit) {
-      this.visitsService.addVisit(this.visit.visitorId);
-    }
+    // if (this.visit) {
+    //   this.visitsService.addVisit(this.visit.visitorId);
+    // }
   }
 
   formatVisitDate(date: Date): string {

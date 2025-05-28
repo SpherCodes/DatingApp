@@ -1,13 +1,12 @@
 <div class="row mb-4">
     @for (photo of member().photos; track photo.id) {
     <div class="col-2 img-wrapper position-relative mb-3">
-        <img src="{{photo.url}}" alt="photo of user" class="img-thumbnail mb-1" [class.NotApproved]="!photo.isApproved">
-        <div class="position-absolute top-50 start-50 translate-middle w-100 text-center" *ngIf="!photo.isApproved">
-            <span class="badge bg-danger bg-opacity-75 px-2 py-1 shadow-sm">
-                <i class="fa fa-clock-o me-1"></i> Pending proval
-            </span>
+        <div class="photo-approval-wrapper">
+            <img src="{{photo.url}}" alt="photo of user" class="img-thumbnail mb-1 photo-img" [class.awaiting-approval]="!photo.isApproved">
+            <div class="approval-overlay" *ngIf="!photo.isApproved">
+                <span class="approval-text">Awaiting<br>approval</span>
+            </div>
         </div>
-       
         <div class="text-center mt-1 d-flex justify-content-center">
             <button 
                 class="btn btn-sm mx-1"
@@ -18,7 +17,7 @@
             <button class="btn btn-sm btn-outline-danger mx-1"
                 [disabled]="photo.isMain"
                 (click)="deletePhoto(photo)"
-            ><i class="fa fa-trash"></i></button>a
+            ><i class="fa fa-trash"></i></button>
         </div>
     </div>
     }

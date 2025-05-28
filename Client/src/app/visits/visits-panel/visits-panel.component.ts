@@ -20,13 +20,14 @@ import { VisitCardComponent } from '../visit-card/visit-card.component';
     VisitCardComponent,
   ],
   templateUrl: './visits-panel.component.html',
-  styleUrl: './visits-panel.component.css',
 })
 export class VisitsPanelComponent implements OnInit, OnDestroy {
+  
   visitsService = inject(VisitsService);
   predicate = 'visitors';
   pageNumber = 1;
   pageSize = 5;
+  timeFilter = 'all';
 
   ngOnInit(): void {
     this.loadVisits();
@@ -49,10 +50,19 @@ export class VisitsPanelComponent implements OnInit, OnDestroy {
   }
 
   loadVisits() {
+    const pastMonthOnly = this.timeFilter === 'month';
     if (this.predicate === 'visitors') {
-      this.visitsService.getVisitors(this.pageNumber, this.pageSize);
+      this.visitsService.getVisitors(
+        this.pageNumber,
+        this.pageSize,
+        pastMonthOnly
+      );
     } else {
-      this.visitsService.getVisited(this.pageNumber, this.pageSize);
+      this.visitsService.getVisited(
+        this.pageNumber,
+        this.pageSize,
+        pastMonthOnly
+      );
     }
   }
 
@@ -61,6 +71,16 @@ export class VisitsPanelComponent implements OnInit, OnDestroy {
       this.pageNumber = event.page;
       this.loadVisits();
     }
+  }
+
+  onPredicateChange() {
+    this.pageNumber = 1; // Reset to first page when switching tabs
+    this.loadVisits();
+  }
+
+  onTimeFilterChange() {
+    this.pageNumber = 1; // Reset to first page when changing time filter
+    this.loadVisits();
   }
 
   getVisitItems(): Visit[] {
