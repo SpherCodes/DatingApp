@@ -48,7 +48,6 @@ export class MembersService {
       .get<Member[]>(this.baseUrl + 'users', { observe: 'response', params })
       .subscribe({
         next: (response) => {
-          console.log('PaginationResult:', response);
           setPaginatedResponse(response, this.paginatedResults);
           this.memberCatch.set(
             Object.values(this.userParams).join('-'),

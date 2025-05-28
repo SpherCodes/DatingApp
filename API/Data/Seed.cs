@@ -24,7 +24,8 @@ namespace API.Data
             {
                 new() {Name = "Member"},
                 new() {Name = "Admin"},
-                new() {Name = "Moderator"}
+                new() {Name = "Moderator"},
+                new() {Name = "VIP"}
             };
 
             foreach (var role in roles)
@@ -36,6 +37,8 @@ namespace API.Data
                 user.UserName = user.UserName!.ToLower();
                 await userManager.CreateAsync(user, "Pa$$w0rd");
                 await userManager.AddToRoleAsync(user, "Member");
+                user.Photos.First().IsMain = true;
+                user.Photos.First().IsApproved = true;
             }
 
             var admin = new AppUser
@@ -49,7 +52,7 @@ namespace API.Data
             };
 
             await userManager.CreateAsync(admin, "Pa$$w0rd");
-            await userManager.AddToRolesAsync(admin, ["Admin", "Moderator"]);
+            await userManager.AddToRolesAsync(admin, ["Admin", "Moderator","VIP"]);
         }
     }
 }

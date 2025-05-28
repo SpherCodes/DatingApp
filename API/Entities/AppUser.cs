@@ -22,7 +22,9 @@ public class AppUser : IdentityUser<int>
     public List<UserLike> LikedByUsers { get; set; } = [];
     public List<UserLike> LikedUsers { get; set; } = [];
     public List<Message> MessagesSent = [];
-    public List<Message>  MessagesReceived = [];
+    public List<Message> MessagesReceived = [];
     public ICollection<AppUserRole> userRoles { get; set; } = [];
+    public ICollection<UserVisit> UserVisits { get; set; } = [];
+    public ICollection<UserVisit> VisitedUsers { get; set; } = [];
 
 }

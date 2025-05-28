@@ -30,7 +30,7 @@ genderList = [{value:'male' ,display: 'Males'}, {value:'female', display: 'Femal
   }
 
   resetFilters(){
-   this.memberService.resetUserParams();
+    this.memberService.resetUserParams();
     this.loadMembers();
   }
 

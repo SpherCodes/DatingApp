@@ -25,7 +25,13 @@ namespace API.Helpers
             CreateMap<DateTime, DateTime>()
                 .ConvertUsing(dateTime => DateTime.SpecifyKind(dateTime, DateTimeKind.Utc));
             CreateMap<DateTime?, DateTime?>()
-                .ConvertUsing(dateTime => dateTime.HasValue ? DateTime.SpecifyKind(dateTime.Value, DateTimeKind.Utc) : null);
+                .ConvertUsing(dateTime => dateTime.HasValue ? DateTime.SpecifyKind(dateTime.Value, DateTimeKind.Utc) : null); CreateMap<UserVisit, VisitDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.VisitorId * 1000000 + src.VisitedId)) // Create unique Id from composite key
+                .ForMember(dest => dest.VisitorId, opt => opt.MapFrom(src => src.VisitorId))
+                .ForMember(dest => dest.VisitorUsername, opt => opt.MapFrom(src => src.Visitor!.UserName))
+                .ForMember(dest => dest.VisitorPhotoUrl, opt => opt.MapFrom(src => src.Visitor!.Photos.FirstOrDefault(x => x.IsMain)!.Url))
+                .ForMember(dest => dest.VisitorKnownAs, opt => opt.MapFrom(src => src.Visitor!.KnownAs))
+                .ForMember(dest => dest.VisitDate, opt => opt.MapFrom(src => src.VisitDate));
         }
     }
 }

@@ -17,6 +17,11 @@
                     <li class="nav-item" *appHasRole="['Admin', 'Moderator']">
                         <a routerLink="/admin" routerLinkActive="active" class="nav-link">Admin</a>
                     </li>
+                    <li class="nav-item" *appHasRole="['VIP']">
+                        <a routerLink="/visitors" routerLinkActive="active" class="nav-link">
+                            <i class="fa fa-eye me-1"></i>My Visitors
+                        </a>
+                    </li>
                 }@else {
                     <li class="nav-item">
                         <a routerLink="contact-us" routerLinkActive="active" class="nav-link">Contact us</a>

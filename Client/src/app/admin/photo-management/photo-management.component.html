@@ -1,1 +1,31 @@
-<p>photo-management works!</p>
+<div class='container mt-4'>
+    <h2 class="text-center text-primary mb-4">Photo Management</h2>
+    <div class='row'>
+        @for (photo of photos; track photo.id) {
+            <div class='col-sm-2 mb-4'>                <div class="card h-100 photo-card">
+                    <h5 class="card-header text-center">{{photo.userName}}</h5>                   
+                    <div class="image-container">
+                        <img src='{{photo.url}}' class='card-img-top p-1' alt='{{photo.userName}}'
+                            (error)="handleImageError($event)">
+                        <div class="image-overlay">
+                            <span class="pending-badge">Pending</span>
+                        </div>
+                    </div>
+                    <div class='card-footer text-center'>
+                        <button class='btn btn-sm btn-success me-1' (click)='approvePhoto(photo.id)'>
+                            <i class="fa fa-check me-1"></i>Approve
+                        </button>
+                        <button class='btn btn-sm btn-danger' (click)='rejectPhoto(photo.id)'>
+                            <i class="fa fa-times me-1"></i>Reject
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+        @empty {
+            <div class="col-12 text-center">
+                <p class="text-muted">No photos pending approval</p>
+            </div>
+        }
+    </div>
+</div>

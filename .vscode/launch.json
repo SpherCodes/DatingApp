@@ -4,14 +4,15 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
         {
             "name": "C# API Debug",
             "type": "dotnet",
             "request": "launch",
-            "projectPath": "${workspaceFolder}/API.csproj",
+            "projectPath": "${workspaceFolder}/API/API.csproj",
         },
         {
-            "name": ".Net Core Attech",
+            "name": ".Net Core Attach",
             "type": "coreclr",
             "request": "attach",
         }

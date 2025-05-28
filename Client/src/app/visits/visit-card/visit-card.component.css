@@ -1,0 +1,56 @@
+/* Copied from member-card.component.css to maintain consistent styling */
+
+.card-img-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card-img-wrapper:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.member-icons {
+    position: absolute;
+    bottom: -30%;
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+    opacity: 0;
+}
+
+.member-icons li {
+    margin: 0 3px;
+}
+
+.card-img-wrapper:hover .member-icons {
+    bottom: 20%;
+    opacity: 1;
+}
+
+.animate {
+    transition: all 0.3s ease-in-out;
+}
+
+.card {
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.badge {
+    font-size: 0.7rem;
+}
