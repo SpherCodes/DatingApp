@@ -1,1 +1,67 @@
 /* Empty CSS file - relies on Bootstrap classes */
+
+.vip-panel {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 2rem 0;
+}
+
+.section-title {
+    font-weight: 700;
+    color: var(--primary-dark);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.vip-badge {
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    color: #5a4500;
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(255, 193, 7, 0.5);
+}
+
+.filter-section {
+    background-color: var(--light-bg);
+    border: 1px solid rgba(0,0,0,0.06);
+}
+
+.filter-btn {
+    background-color: white;
+    border: 1px solid rgba(0,0,0,0.1);
+    color: var(--gray-text);
+    transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+}
+
+.visit-results-count {
+    color: var(--gray-text);
+    font-size: 0.9rem;
+}
+
+.filter-active-indicator {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.pagination {
+    margin-bottom: 1.5rem;
+}

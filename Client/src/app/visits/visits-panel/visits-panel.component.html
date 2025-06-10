@@ -1,42 +1,62 @@
 <!-- VIP Visits Panel -->
-<div class="text-center mt-3">
-    <h2>{{getTitle()}} <span class="badge bg-warning text-dark"><i class="fa fa-crown me-1"></i>VIP</span></h2>
-</div>
-
-<div class="container mt-3">
-    <div class="d-flex flex-wrap gap-2 mb-3">
-        <!-- View Type Selector -->
-        <div class="btn-group">
-            <button class="btn btn-primary" 
-                btnRadio="visitors"
-                [(ngModel)]="predicate" 
-                (click)="onPredicateChange()">
-                Who visited me
-            </button>
-            <button class="btn btn-primary" 
-                btnRadio="visits"
-                [(ngModel)]="predicate" 
-                (click)="onPredicateChange()">
-                Who I visited
-            </button>
+<div class="vip-panel mt-4">
+    <div class="container">
+        <div class="header-section text-center mb-4">
+            <h2 class="section-title">
+                {{getTitle()}} 
+                <span class="vip-badge ms-2">
+                    <i class="fa fa-crown me-1"></i>VIP Feature
+                </span>
+            </h2>
+            <p class="text-muted">Track who's been checking out your profile and who you've visited</p>
         </div>
 
-        <!-- Time Filter Selector -->
-        <div class="btn-group">
-            <button class="btn btn-primary" 
-                btnRadio="all"
-                [(ngModel)]="timeFilter"
-                (click)="onTimeFilterChange()">
-                All visits
-            </button>
-            <button class="btn btn-primary" 
-                btnRadio="month"
-                [(ngModel)]="timeFilter"
-                (click)="onTimeFilterChange()">
-                Past month
-            </button>
+        <div class="filter-section p-3 mb-4 rounded shadow-sm">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <!-- View Type Selector -->
+                    <label class="form-label mb-2"><i class="fa fa-filter me-1"></i> View</label>
+                    <div class="btn-group w-100">
+                        <button class="btn filter-btn" 
+                            [ngClass]="{'active': predicate === 'visitors'}"
+                            btnRadio="visitors"
+                            [(ngModel)]="predicate" 
+                            (click)="onPredicateChange()">
+                            <i class="fa fa-users me-1"></i> Who visited me
+                        </button>
+                        <button class="btn filter-btn" 
+                            [ngClass]="{'active': predicate === 'visits'}"
+                            btnRadio="visits"
+                            [(ngModel)]="predicate" 
+                            (click)="onPredicateChange()">
+                            <i class="fa fa-eye me-1"></i> Who I visited
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <!-- Time Filter Selector -->
+                    <label class="form-label mb-2"><i class="fa fa-calendar me-1"></i> Time Period</label>
+                    <div class="btn-group w-100">
+                        <button class="btn filter-btn" 
+                            [ngClass]="{'active': timeFilter === 'all'}"
+                            btnRadio="all"
+                            [(ngModel)]="timeFilter"
+                            (click)="onTimeFilterChange()">
+                            <i class="fa fa-list me-1"></i> All visits
+                        </button>
+                        <button class="btn filter-btn" 
+                            [ngClass]="{'active': timeFilter === 'month'}"
+                            btnRadio="month"
+                            [(ngModel)]="timeFilter"
+                            (click)="onTimeFilterChange()">
+                            <i class="fa fa-clock-o me-1"></i> Past month
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>    <!-- Results Count Info -->
+    </div><!-- Results Count Info -->
     @if (getPagination()) {
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="text-muted">

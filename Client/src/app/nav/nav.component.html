@@ -1,56 +1,106 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: var(--primary-color); box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
     <div class="container">
-        <a class="navbar-brand" routerLink="/">Dating App</a>
+        <a class="navbar-brand fw-bold" routerLink="/"><i class="fa fa-heart me-2"></i>Dating App</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <ul class="navbar-nav me-auto mb-2 mb-md-0" >
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 @if(AccountsService.CurrentUser()){
-
                     <li class="nav-item">
-                        <a routerLink="/members"  routerLinkActive="active" class="nav-link">Matches</a>
+                        <a routerLink="/members" routerLinkActive="active" class="nav-link px-3">
+                            <i class="fa fa-users me-1"></i>Matches
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a routerLink="lists" routerLinkActive="active" class="nav-link">Lists</a>
+                        <a routerLink="lists" routerLinkActive="active" class="nav-link px-3">
+                            <i class="fa fa-heart me-1"></i>Lists
+                        </a>
                     </li>  
                     <li class="nav-item">
-                        <a routerLink="messages" routerLinkActive="active" class="nav-link">Messages</a>
+                        <a routerLink="messages" routerLinkActive="active" class="nav-link px-3">
+                            <i class="fa fa-envelope me-1"></i>Messages
+                        </a>
                     </li>
                     <li class="nav-item" *appHasRole="['Admin', 'Moderator']">
-                        <a routerLink="/admin" routerLinkActive="active" class="nav-link">Admin</a>
+                        <a routerLink="/admin" routerLinkActive="active" class="nav-link px-3">
+                            <i class="fa fa-unlock-alt me-1"></i>Admin
+                        </a>
                     </li>                    
                     
                     <li class="nav-item" *appHasRole="['VIP']">
-                        <a routerLink="/visits" routerLinkActive="active" class="nav-link">
+                        <a routerLink="/visits" routerLinkActive="active" class="nav-link px-3">
                             <i class="fa fa-eye me-1"></i>My Visitors
+                            <span class="badge bg-accent ms-1" style="background-color: var(--accent-color);">VIP</span>
                         </a>
                     </li>
                 }@else {
                     <li class="nav-item">
-                        <a routerLink="contact-us" routerLinkActive="active" class="nav-link">Contact us</a>
+                        <a routerLink="contact-us" routerLinkActive="active" class="nav-link px-3">
+                            <i class="fa fa-envelope-o me-1"></i>Contact us
+                        </a>
                     </li>
                 }
-            <li class="nav-item">
-                <a routerLink="errors" routerLinkActive="active" class="nav-link">errors</a>
-            </ul>
-
-    @if(AccountsService.CurrentUser()){
-        <div  dropdown class="dropdown" >
-            <img src="{{AccountsService.CurrentUser()?.photoUrl || 'user.png'}}" class="me-2 border border-white" />
-            <a  dropdownToggle class="dropdown-toggle text-light text-decoration-none">
-                Welcome {{AccountsService.CurrentUser()?.knownAs}}
-            </a>
-            <div class="dropdown-menu" *dropdownMenu>
-                <a routerLink="member/edit" class="dropdown-item">Edit profile</a>
+                <!-- Hide errors link from regular users -->
+                <li class="nav-item" *appHasRole="['Admin', 'Moderator']">
+                    <a routerLink="errors" routerLinkActive="active" class="nav-link px-3">
+                        <i class="fa fa-exclamation-triangle me-1"></i>Errors
+                    </a>
+                </li>
+            </ul>    @if(AccountsService.CurrentUser()){
+        <div dropdown class="dropdown">
+            <div class="d-flex align-items-center">
+                <img 
+                    src="{{AccountsService.CurrentUser()?.photoUrl || 'user.png'}}" 
+                    class="me-2 rounded-circle" 
+                    style="height: 36px; width: 36px; object-fit: cover; border: 2px solid white;" />
+                <a dropdownToggle class="dropdown-toggle text-light text-decoration-none d-flex align-items-center">
+                    <span class="me-1">Welcome,</span>
+                    <span class="fw-bold">{{AccountsService.CurrentUser()?.knownAs}}</span>
+                </a>
+            </div>
+            <div class="dropdown-menu shadow border-0" *dropdownMenu style="border-radius: var(--border-radius);">
+                <a routerLink="member/edit" class="dropdown-item">
+                    <i class="fa fa-user me-2"></i>Edit profile
+                </a>
+                <a class="dropdown-item">
+                    <i class="fa fa-cog me-2"></i>Settings
+                </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" (click)="logout()">Logout</a>
+                <a class="dropdown-item" (click)="logout()">
+                    <i class="fa fa-sign-out me-2"></i>Logout
+                </a>
             </div>
         </div>
-    }
-
-    @if (!AccountsService.CurrentUser()) {
-        <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex">
-            <input name="Username" [(ngModel)] = "Model.username" class="form-control me-2" placeholder="Username" >
-            <input name="password" [(ngModel)] = "Model.password" class="form-control me-2" placeholder="Password" type="password"  >
-            <button class="btn btn-success" type="submit">Login</button>
+    }    @if (!AccountsService.CurrentUser()) {
+        <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex align-items-center login-form">
+            <div class="input-group me-2 nav-input-group">
+                <span class="input-group-text bg-transparent border-end-0 text-white" style="background: rgba(255,255,255,0.15) !important; border-color: rgba(255,255,255,0.3);">
+                    <i class="fa fa-user"></i>
+                </span>
+                <input 
+                    name="Username" 
+                    [(ngModel)]="Model.username" 
+                    class="form-control border-start-0" 
+                    placeholder="Username"
+                    style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: white; backdrop-filter: blur(5px);">
+            </div>
+            <div class="input-group me-2 nav-input-group">
+                <span class="input-group-text bg-transparent border-end-0 text-white" style="background: rgba(255,255,255,0.15) !important; border-color: rgba(255,255,255,0.3);">
+                    <i class="fa fa-lock"></i>
+                </span>
+                <input 
+                    name="password" 
+                    [(ngModel)]="Model.password" 
+                    class="form-control border-start-0" 
+                    type="password" 
+                    placeholder="Password"
+                    style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: white; backdrop-filter: blur(5px);">
+            </div>
+            <button class="btn login-btn pulse-on-hover" style="background-color: var(--accent-color); color: white;" type="submit">
+                <i class="fa fa-sign-in me-1"></i>Login
+            </button>
         </form>
     }
 </div>
