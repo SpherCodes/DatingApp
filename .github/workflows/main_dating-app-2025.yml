@@ -53,4 +53,4 @@ jobs:
           app-name: 'dating-app-2025'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_52F7AC0570EB406CAB08B1A026AFA736 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE  }}
