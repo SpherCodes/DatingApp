@@ -1,56 +1,295 @@
-/* Copied from member-card.component.css to maintain consistent styling */
+/* Spark Visit Card Component Styles */
 
-.card-img-wrapper {
+.visit-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    border: none;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    height: 100%;
     overflow: hidden;
     position: relative;
 }
 
-.card-img-top {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    transition: transform 0.2s ease-in-out;
+.visit-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--box-shadow-hover);
 }
 
-.card-img-wrapper:hover .card-img-top {
+/* Card Image */
+.card-img-wrapper {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.visit-card:hover .card-img-top {
     transform: scale(1.05);
 }
 
+/* Visit Badge */
+.visit-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(74, 93, 124, 0.9);
+    color: var(--white);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.visit-badge.recent {
+    background: rgba(212, 119, 107, 0.9);
+}
+
+.visit-badge.frequent {
+    background: rgba(90, 154, 107, 0.9);
+}
+
+/* Member Icons */
 .member-icons {
     position: absolute;
-    bottom: -30%;
-    left: 0;
-    right: 0;
-    margin-right: auto;
-    margin-left: auto;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     opacity: 0;
-}
-
-.member-icons li {
-    margin: 0 3px;
-}
-
-.card-img-wrapper:hover .member-icons {
-    bottom: 20%;
-    opacity: 1;
-}
-
-.animate {
-    transition: all 0.3s ease-in-out;
-}
-
-.card {
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transform: translateY(-10px);
     transition: all 0.3s ease;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+.visit-card:hover .member-icons {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.badge {
+.member-icons .btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    color: var(--primary-color);
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    font-size: 0.85rem;
+}
+
+.member-icons .btn:hover {
+    background: var(--primary-color);
+    color: var(--white);
+    transform: scale(1.1);
+}
+
+.member-icons .btn-success {
+    background: rgba(90, 154, 107, 0.9);
+    color: var(--white);
+}
+
+.member-icons .btn-success:hover {
+    background: var(--success-color);
+    transform: scale(1.1);
+}
+
+.member-icons .btn-danger {
+    background: rgba(212, 107, 107, 0.9);
+    color: var(--white);
+}
+
+.member-icons .btn-danger:hover {
+    background: var(--danger-color);
+    transform: scale(1.1);
+}
+
+/* Card Body */
+.card-body {
+    padding: 1.5rem;
+    position: relative;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+}
+
+.card-title:hover {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.card-text {
+    color: var(--gray-text);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+/* Visit Info */
+.visit-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: var(--light-bg);
+    border-top: 1px solid var(--gray-light);
+    font-size: 0.85rem;
+}
+
+.visit-time {
+    color: var(--gray-text);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.visit-time i {
+    color: var(--accent-color);
+    font-size: 0.8rem;
+}
+
+.visit-count {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-weight: var(--font-weight-bold);
+    font-size: 0.75rem;
+}
+
+/* Online Status */
+.online-status {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--success-color);
+    border: 2px solid var(--white);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.offline-status {
+    background: var(--gray-text);
+}
+
+/* Premium Badge */
+.premium-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #333;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
     font-size: 0.7rem;
+    font-weight: var(--font-weight-bold);
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.premium-badge i {
+    font-size: 0.65rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-img-wrapper {
+        height: 180px;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    .member-icons {
+        top: 0.75rem;
+        right: 0.75rem;
+        gap: 0.25rem;
+    }
+    
+    .member-icons .btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+    
+    .visit-info {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .visit-badge {
+        top: 0.75rem;
+        left: 0.75rem;
+        padding: 0.2rem 0.5rem;
+        font-size: 0.7rem;
+    }
+}
+
+/* Loading Animation */
+.visit-card.loading {
+    animation: sparkFadeIn 0.6s ease-out;
+}
+
+/* Hover Effects */
+.visit-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
+
+.visit-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* No Photo Placeholder */
+.no-photo-placeholder {
+    height: 200px;
+    background: linear-gradient(135deg, var(--light-bg), var(--gray-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: var(--gray-text);
+}
+
+.no-photo-placeholder i {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.5;
+}
+
+.no-photo-placeholder span {
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-medium);
 }

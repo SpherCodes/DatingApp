@@ -1,0 +1,266 @@
+/* Spark App Component Styles */
+
+.app-container {
+    min-height: 100vh;
+    background: var(--white);
+}
+
+/* Main Content Area */
+.main-content {
+    padding-top: 76px; /* Account for fixed navbar */
+    min-height: 100vh;
+}
+
+/* Page Transitions */
+.page-transition {
+    animation: sparkFadeIn 0.6s ease-out;
+}
+
+/* Global Loading States */
+.app-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.app-loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid var(--gray-light);
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.app-loading-text {
+    color: var(--gray-text);
+    font-weight: var(--font-weight-medium);
+    font-size: 1.1rem;
+}
+
+/* Error States */
+.app-error {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--danger-color);
+}
+
+.app-error i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.app-error h3 {
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 0.5rem;
+}
+
+.app-error p {
+    color: var(--gray-text);
+    margin-bottom: 1.5rem;
+}
+
+.app-error .btn {
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: var(--border-radius);
+    font-weight: var(--font-weight-medium);
+    transition: var(--transition);
+}
+
+.app-error .btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* Toast Notifications Override */
+.toast {
+    border-radius: var(--border-radius);
+    border: none;
+    box-shadow: var(--box-shadow-hover);
+    backdrop-filter: blur(10px);
+}
+
+.toast-success {
+    background: rgba(90, 154, 107, 0.95);
+    color: var(--white);
+}
+
+.toast-error {
+    background: rgba(212, 107, 107, 0.95);
+    color: var(--white);
+}
+
+.toast-info {
+    background: rgba(74, 93, 124, 0.95);
+    color: var(--white);
+}
+
+.toast-warning {
+    background: rgba(212, 147, 107, 0.95);
+    color: var(--white);
+}
+
+/* Modal Overrides */
+.modal-content {
+    border-radius: var(--border-radius-large);
+    border: none;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--gray-light);
+    padding: 1.5rem 2rem;
+}
+
+.modal-title {
+    font-weight: var(--font-weight-bold);
+    color: var(--dark-text);
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--gray-light);
+    padding: 1.5rem 2rem;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-bg);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gray-text);
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* Focus States */
+*:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 93, 124, 0.2);
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .btn,
+    .member-icons,
+    .action-btn {
+        display: none !important;
+    }
+    
+    .main-content {
+        padding-top: 0 !important;
+    }
+    
+    * {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    :root {
+        --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        --box-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    .btn {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Dark Mode Support (Future Enhancement) */
+@media (prefers-color-scheme: dark) {
+    /* These styles would be activated if dark mode is implemented */
+    /*
+    :root {
+        --primary-color: #6b7d9c;
+        --primary-dark: #4a5d7c;
+        --white: #1a1a1a;
+        --light-bg: #2a2a2a;
+        --dark-text: #ffffff;
+        --gray-text: #b0b0b0;
+    }
+    */
+}
+
+/* Responsive Container Overrides */
+@media (max-width: 576px) {
+    .main-content {
+        padding-top: 70px;
+    }
+}
+
+/* Performance Optimizations */
+.gpu-accelerated {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Utility Classes */
+.spark-shadow {
+    box-shadow: var(--box-shadow);
+}
+
+.spark-shadow-hover {
+    box-shadow: var(--box-shadow-hover);
+}
+
+.spark-transition {
+    transition: var(--transition);
+}
+
+.spark-border-radius {
+    border-radius: var(--border-radius);
+}
+
+.spark-text-primary {
+    color: var(--primary-color) !important;
+}
+
+.spark-text-accent {
+    color: var(--accent-color) !important;
+}
+
+.spark-bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.spark-bg-accent {
+    background-color: var(--accent-color) !important;
+}

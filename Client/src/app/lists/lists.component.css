@@ -1,0 +1,380 @@
+/* Spark Lists Component Styles */
+
+.lists-container {
+    padding: 2rem 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 100%);
+}
+
+.lists-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.lists-header h2 {
+    font-weight: var(--font-weight-bold);
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+}
+
+.lists-header p {
+    color: var(--gray-text);
+    font-size: 1.1rem;
+}
+
+/* Filter Tabs */
+.filter-section {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-tab {
+    padding: 0.75rem 2rem;
+    border: 2px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    background: var(--white);
+    color: var(--dark-text);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-tab:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+.filter-tab.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white);
+}
+
+.filter-tab i {
+    font-size: 0.9rem;
+}
+
+/* Likes Tab Specific */
+.filter-tab.likes {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.filter-tab.likes:hover,
+.filter-tab.likes.active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--white);
+}
+
+/* Liked By Tab Specific */
+.filter-tab.liked-by {
+    border-color: var(--success-color);
+    color: var(--success-color);
+}
+
+.filter-tab.liked-by:hover,
+.filter-tab.liked-by.active {
+    background: var(--success-color);
+    border-color: var(--success-color);
+    color: var(--white);
+}
+
+/* Lists Grid */
+.lists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* Member Card in Lists */
+.list-member-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    transition: var(--transition);
+    position: relative;
+}
+
+.list-member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-hover);
+}
+
+.list-member-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.list-member-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.list-member-card .card-body {
+    padding: 1.5rem;
+}
+
+.list-member-card .card-title {
+    font-weight: var(--font-weight-bold);
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.list-member-card .card-text {
+    color: var(--gray-text);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* Action Buttons */
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.action-btn {
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-small);
+    border: none;
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.85rem;
+}
+
+.btn-view {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-view:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.btn-remove {
+    background: var(--danger-color);
+    color: var(--white);
+}
+
+.btn-remove:hover {
+    background: #c55a5a;
+    transform: translateY(-1px);
+}
+
+.btn-message {
+    background: var(--accent-color);
+    color: var(--white);
+}
+
+.btn-message:hover {
+    background: var(--accent-dark);
+    transform: translateY(-1px);
+}
+
+/* List Status Badges */
+.list-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--white);
+    backdrop-filter: blur(10px);
+}
+
+.badge-liked {
+    background: rgba(212, 119, 107, 0.9);
+}
+
+.badge-liked-by {
+    background: rgba(90, 154, 107, 0.9);
+}
+
+.badge-mutual {
+    background: rgba(74, 93, 124, 0.9);
+}
+
+/* Empty State */
+.empty-lists {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--gray-text);
+}
+
+.empty-lists i {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-lists h3 {
+    font-weight: var(--font-weight-bold);
+    color: var(--dark-text);
+    margin-bottom: 0.5rem;
+}
+
+.empty-lists p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.empty-lists .btn {
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: var(--border-radius);
+    font-weight: var(--font-weight-medium);
+    transition: var(--transition);
+}
+
+.empty-lists .btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* Stats Section */
+.lists-stats {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    text-align: center;
+}
+
+.stat-item {
+    padding: 1rem;
+    border-radius: var(--border-radius-small);
+    background: var(--light-bg);
+    transition: var(--transition);
+}
+
+.stat-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--box-shadow);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: var(--gray-text);
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-medium);
+}
+
+/* Loading State */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    flex-direction: column;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--gray-light);
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    margin-top: 1rem;
+    color: var(--gray-text);
+    font-weight: var(--font-weight-medium);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .lists-container {
+        padding: 1rem 0;
+    }
+    
+    .lists-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .filter-tabs {
+        gap: 0.5rem;
+    }
+    
+    .filter-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .lists-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-tabs {
+        flex-direction: column;
+    }
+    
+    .filter-tab {
+        justify-content: center;
+    }
+    
+    .card-actions {
+        flex-direction: column;
+    }
+    
+    .action-btn {
+        width: 100%;
+    }
+}
