@@ -32,8 +32,7 @@
                 <span class="online-dot"></span>
             </span>
         }
-        
-        @if (member().hasRoles?.includes('VIP')) {
+          @if (isVip()) {
             <span class="vip-badge">
                 <i class="fa fa-crown"></i>
             </span>
